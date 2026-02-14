@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Domenica 💖</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    padding: 30px 10px 80px;
+    overflow-x: hidden;
+}
+
+.card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+    padding: 20px;
+    max-width: 480px;
+    margin: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* FOTO */
+.foto-container {
+    position: relative;
+    display: inline-block;
+}
+
+.foto {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 20px;
+    margin-top: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition: transform 0.5s ease;
+}
+
+.foto:hover {
+    transform: scale(1.05);
+}
+
+.frase-foto {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.5);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* BOTÓN */
+button {
+    background: #fff;
+    color: #ff4b6e;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 999px;
+    border: none;
+    text-align: center;
+    width: 120px;
+    font-size: 16px;
+}
+
+#mensaje { display: none; margin-top: 15px; }
+
+/* Corazones */
+.heart {
+    position: fixed;
+    bottom: -30px;
+    font-size: 20px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-120vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>💖 Para Domenica 💖</h1>
+
+<p id="dias"></p>
+<p> Ecuador 🇪🇨 ↔️ España 🇪🇸</p>
+
+<div class="foto-container">
+    <img src="nosotros.jpg" class="foto">
+    <div class="frase-foto">Mi lugar favorito es a tu lado 💕</div>
+</div>
+
+<div id="game">
+<p>🎮 Adivina el número del 1 al 5 para desbloquear tu mensaje</p>
+<input type="number" id="guess" min="1" max="5">
+<br>
+<button onclick="jugar()">Intentar 💘</button>
+<p id="resultado"></p>
+</div>
+
+<div id="mensaje">
+<h3>💌 Mensaje para ti</h3>
+<p>
+Domenica 💕<br><br>
+Aunque estés en España y yo aquí en Ecuador extrañandote
+todos los dias, quiero que sepas que te
+ extraño <strong>cada segundo</strong>
+que no estás a mi lado <br><br>
+No hay día, ni minuto, ni momento en el que no piense en ti.
+La distancia solo me hace amarte más y creer en este historia 
+de amor que nunca tendra fin <br><br>
+Te amo y cuento los días para volver a abrazarte 💘
+</p>
+</div>
+
+</div>
+
+<script>
+/* Contador real */
+const inicio = new Date("2024-02-18T00:00:00");
+const hoy = new Date();
+const dias = Math.floor((hoy - inicio) / (1000*60*60*24));
+document.getElementById("dias").innerHTML =
+"💑 Llevamos " + dias + " días juntos desde el 18 de febrero del 2024 💑";
+
+/* Juego */
+let secreto = Math.floor(Math.random()*5)+1;
+let intentos = 3;
+
+function jugar(){
+    let valor = parseInt(document.getElementById("guess").value);
+    let resultado = document.getElementById("resultado");
+
+    if(valor === secreto){
+        resultado.innerHTML = "🎉 ¡Ganaste! 💖";
+        document.getElementById("mensaje").style.display = "block";
+        lanzarCorazones();
+    } else {
+        intentos--;
+        if(intentos > 0){
+            resultado.innerHTML = " ese  no mi amor  " + intentos + " intentos";
+        } else {
+            resultado.innerHTML = "Igual te amo 💕";
+            document.getElementById("mensaje").style.display = "block";
+            lanzarCorazones();
+        }
+    }
+}
+
+/* Corazones */
+function lanzarCorazones(){
+    let intervalo = setInterval(()=>{
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.animationDuration = (3 + Math.random()*2) + "s";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),5000);
+    },200);
+
+    setTimeout(()=>clearInterval(intervalo),7000);
+}
+</script>
+
+</body>
+</html>
